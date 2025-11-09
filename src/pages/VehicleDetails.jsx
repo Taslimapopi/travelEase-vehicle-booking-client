@@ -1,13 +1,13 @@
 import React, { use, useEffect, useRef, useState } from "react";
-import { Link, useParams } from "react-router";
+import { Link, useNavigate, useParams } from "react-router";
 import { AuthContext } from "../provider/context";
 
 const VehicleDetails = () => {
   const { id } = useParams();
-  console.log(id);
   const [vehicle, setVehicle] = useState({});
   const bookModalRef = useRef(null);
-  const {user} = use(AuthContext)
+  const { user } = use(AuthContext);
+  const navigate = useNavigate()
 
   useEffect(() => {
     fetch(`http://localhost:3000/vehicles/${id}`)
@@ -31,18 +31,31 @@ const VehicleDetails = () => {
     bookModalRef.current.showModal();
   };
 
-  const handleBookForm = (e) =>{
+  const handleBookForm = (e) => {
     e.preventDefault();
     const bookData = {
-        user: e.target.userName.value,
-        vehicleName: e.target.vehicleName.value,
-        pickUpTime: e.target.pickingTime.value,
-        returnTime: e.target.returnTime.value,
-        location: e.target.location.value,
-        email: e.target.email.value,
-    }
-    console.log(bookData)
-  }
+      user: e.target.userName.value,
+      vehicleName: e.target.vehicleName.value,
+      pickUpTime: e.target.pickingTime.value,
+      returnTime: e.target.returnTime.value,
+      location: e.target.location.value,
+      email: e.target.email.value,
+    };
+   
+    fetch("http://localhost:3000/bookings",{
+        method: 'POST',
+        headers:{
+            'content-type':'application/json'
+        },
+        body: JSON.stringify(bookData)
+    })
+    .then(res=>res.json())
+    .then(data=>{console.log(data)
+        e.target.reset()
+        navigate('/')
+    })
+    .catch(error=>console.log(error))
+  };
 
   return (
     <div className="p-5 flex justify-center ">
@@ -172,7 +185,7 @@ const VehicleDetails = () => {
                 required
               />
 
-               {/* Email */}
+              {/* Email */}
               <label className="label font-semibold">Email</label>
               <input
                 type="email"
