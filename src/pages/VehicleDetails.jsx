@@ -1,30 +1,51 @@
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useRef, useState } from "react";
 import { Link, useParams } from "react-router";
+import { AuthContext } from "../provider/context";
 
 const VehicleDetails = () => {
   const { id } = useParams();
   console.log(id);
-  const [vehicle,setVehicle] = useState({})
+  const [vehicle, setVehicle] = useState({});
+  const bookModalRef = useRef(null);
+  const {user} = use(AuthContext)
 
-  useEffect(()=>{
+  useEffect(() => {
     fetch(`http://localhost:3000/vehicles/${id}`)
-    .then(res=>res.json())
-    .then(data=>setVehicle(data))
-  },[])
+      .then((res) => res.json())
+      .then((data) => setVehicle(data));
+  }, []);
 
-  const handleDelete = () =>{
-    fetch(`http://localhost:3000/vehicles/${vehicle._id}`,{
-        method: 'DELETE',
-        headers: {
-            "Content-Type": "application/json",
-          },
+  const handleDelete = () => {
+    fetch(`http://localhost:3000/vehicles/${vehicle._id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
     })
-    .then(res=>res.json())
-    .then(data=>console.log(data))
-    .catch(error=>console.log(error))
+      .then((res) => res.json())
+      .then((data) => console.log(data))
+      .catch((error) => console.log(error));
+  };
+
+  const handleBookModalRef = () => {
+    bookModalRef.current.showModal();
+  };
+
+  const handleBookForm = (e) =>{
+    e.preventDefault();
+    const bookData = {
+        user: e.target.userName.value,
+        vehicleName: e.target.vehicleName.value,
+        pickUpTime: e.target.pickingTime.value,
+        returnTime: e.target.returnTime.value,
+        location: e.target.location.value,
+        email: e.target.email.value,
+    }
+    console.log(bookData)
   }
+
   return (
-     <div className="p-5 flex justify-center ">
+    <div className="p-5 flex justify-center ">
       <div className="card lg:card-side bg-base-100 shadow-xl w-full max-w-5xl">
         {/* ✅ Image section */}
         <figure className="flex-shrink-0 w-full lg:w-[45%] h-[350px] pt-7 ">
@@ -45,25 +66,135 @@ const VehicleDetails = () => {
 
           <div className="p-2 text-left overflow-y-auto ">
             <ul className="text-sm text-gray-700 space-y-1">
-              <li><strong>Owner:</strong> {vehicle.owner}</li>
-              <li><strong>Category:</strong> {vehicle.category}</li>
-              <li><strong>Seat Capacity:</strong> {vehicle.seatCapacity}</li>
-              <li><strong>Price/Day:</strong> ${vehicle.pricePerDay}</li>
-              <li><strong>Location:</strong> {vehicle.location}</li>
-              <li><strong>Availability:</strong> {vehicle.availability}</li>
-              <li><strong>Email:</strong> {vehicle.userEmail}</li>
+              <li>
+                <strong>Owner:</strong> {vehicle.owner}
+              </li>
+              <li>
+                <strong>Category:</strong> {vehicle.category}
+              </li>
+              <li>
+                <strong>Seat Capacity:</strong> {vehicle.seatCapacity}
+              </li>
+              <li>
+                <strong>Price/Day:</strong> ${vehicle.pricePerDay}
+              </li>
+              <li>
+                <strong>Location:</strong> {vehicle.location}
+              </li>
+              <li>
+                <strong>Availability:</strong> {vehicle.availability}
+              </li>
+              <li>
+                <strong>Email:</strong> {vehicle.userEmail}
+              </li>
             </ul>
 
             <p className="text-gray-600 text-sm mt-3">{vehicle.detailsDesc}</p>
           </div>
 
           <div className="card-actions justify-end mt-4">
-            <button className="btn btn-primary">Book Now</button>
-            <Link to={`/update-vehicles/${vehicle._id}`} className="btn btn-accent">Update</Link>
-            <button onClick={handleDelete} className="btn btn-outline">Delete</button>
+            <button onClick={handleBookModalRef} className="btn btn-primary">
+              Book Now
+            </button>
+            <Link
+              to={`/update-vehicles/${vehicle._id}`}
+              className="btn btn-accent"
+            >
+              Update
+            </Link>
+            <button onClick={handleDelete} className="btn btn-outline">
+              Delete
+            </button>
           </div>
         </div>
       </div>
+      <dialog
+        ref={bookModalRef}
+        id="my_modal_5"
+        className="modal modal-bottom sm:modal-middle"
+      >
+        <div className="modal-box">
+          <h3 className="font-bold text-2xl text-center text-green-700">
+            Ready to Ride? Book Your Vehicle Now!
+            <br />
+            <p className="text-center">🚗</p>
+          </h3>
+          <form onSubmit={handleBookForm}>
+            <fieldset className="fieldset space-y-2">
+              {/* Name */}
+              <label className="label font-semibold">Name</label>
+              <input
+                type="text"
+                defaultValue={user.displayName}
+                name="userName"
+                className="input input-bordered w-full"
+                placeholder="Enter your name"
+                required
+              />
+
+              {/* Vehicle Name */}
+              <label className="label font-semibold">Vehicle Name</label>
+              <input
+                type="text"
+                defaultValue={vehicle.vehicleName}
+                readOnly
+                name="vehicleName"
+                className="input input-bordered w-full"
+                placeholder="Enter vehicle name"
+                required
+              />
+
+              {/* Pickup Time */}
+              <label className="label font-semibold">Pickup Time</label>
+              <input
+                type="datetime-local"
+                name="pickingTime"
+                className="input input-bordered w-full"
+                required
+              />
+
+              {/* Return Time */}
+              <label className="label font-semibold">Return Time</label>
+              <input
+                type="datetime-local"
+                name="returnTime"
+                className="input input-bordered w-full"
+                required
+              />
+
+              {/* Pickup Location */}
+              <label className="label font-semibold">Pickup Location</label>
+              <input
+                type="text"
+                name="location"
+                className="input input-bordered w-full"
+                placeholder="Enter pickup location"
+                required
+              />
+
+               {/* Email */}
+              <label className="label font-semibold">Email</label>
+              <input
+                type="email"
+                defaultValue={user.email}
+                name="email"
+                className="input input-bordered w-full"
+                placeholder="Enter your email"
+                required
+              />
+
+              <button className="btn btn-accent mt-4 w-full">Book Now</button>
+            </fieldset>
+          </form>
+
+          <div className="modal-action">
+            <form method="dialog">
+              {/* if there is a button in form, it will close the modal */}
+              <button className="btn">Close</button>
+            </form>
+          </div>
+        </div>
+      </dialog>
     </div>
   );
 };
