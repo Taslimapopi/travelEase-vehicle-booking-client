@@ -6,6 +6,9 @@ import Login from "../pages/Login";
 import PrivateRoute from "./PrivateRoute";
 import AddVehicles from "../pages/AddVehicles";
 import UpdateVehicles from "../pages/UpdateVehicles";
+import MyVehicles from "../pages/MyVehicles";
+import MyBookings from "../pages/MyBookings";
+import Register from "../pages/Register";
 
 
 export const router = createBrowserRouter([
@@ -30,6 +33,10 @@ export const router = createBrowserRouter([
             element:<Login></Login>
         },
         {
+            path:'/auth/register',
+            element:<Register></Register>
+        },
+        {
             path:'/add-vehicles',
             element: <AddVehicles></AddVehicles>
         },
@@ -37,6 +44,15 @@ export const router = createBrowserRouter([
             path:'/update-vehicles/:id',
             element:<UpdateVehicles></UpdateVehicles>,
             loader:({params})=>fetch(`http://localhost:3000/vehicles/${params.id}`)
+        },
+        {
+            path:'/my-vehicles',
+            element:<MyVehicles></MyVehicles>
+
+        },
+        {
+            path:'/my-bookings',
+            element:<MyBookings></MyBookings>
         }
     ]
   },

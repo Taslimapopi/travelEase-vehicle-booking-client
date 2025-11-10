@@ -5,7 +5,7 @@ import { GoHomeFill } from 'react-icons/go';
 import { IoLogoModelS } from 'react-icons/io';
 import { LuRotate3D } from 'react-icons/lu';
 import { ImBoxAdd } from 'react-icons/im';
-import { FaUser } from 'react-icons/fa';
+import { FaAddressBook, FaCarSide, FaUser } from 'react-icons/fa';
 import { FaGear } from 'react-icons/fa6';
 import { IoLogIn, IoLogOut } from 'react-icons/io5';
 import logo from '../assets/carlogo.png'
@@ -111,13 +111,13 @@ const NavBar = () => {
 
               <li>
                 <Link to={"/my-vehicles"}>
-                  My Vehicles
+                  <FaCarSide />My Vehicles
                 </Link>
               </li>
 
               <li >
                 <Link to={"/my-bookings"}>
-                 My Bookings
+                <FaAddressBook /> My Bookings
                 </Link>
               </li>
 

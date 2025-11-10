@@ -13,7 +13,7 @@ const AddVehicles = () => {
       description: e.target.description.value,
       coverImage: e.target.thumbnail.value,
       created_at: new Date(),
-      created_by: user.email
+      userEmail: user.email
     }
     console.log(formData)
     fetch('http://localhost:3000/vehicles',{
@@ -91,7 +91,7 @@ const AddVehicles = () => {
             ></textarea>
           </div>
           {/* email */}
-          <div>
+          {/* <div>
             <label className="label font-medium">Email</label>
             <input
               type="email"
@@ -100,7 +100,7 @@ const AddVehicles = () => {
               className="input w-full rounded-full focus:border-0 focus:outline-gray-200"
               placeholder="Enter email"
             />
-          </div>
+          </div> */}
           {/* created at */}
 
           

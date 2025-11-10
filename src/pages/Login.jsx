@@ -1,5 +1,6 @@
 import React, { use} from "react";
 import { AuthContext } from "../provider/context";
+import { Link } from "react-router";
 
 
 const Login = () => {
@@ -32,6 +33,7 @@ const Login = () => {
               <a className="link link-hover">Forgot password?</a>
             </div>
             <button className="btn btn-neutral mt-4">Login</button>
+             
           </fieldset>
         </form>
         <button onClick={handleGoogleLogin}
@@ -65,6 +67,12 @@ const Login = () => {
           </svg>
           Login with Google
         </button>
+        <p className="font-semibold text-center pt-5">
+                Dont’t Have An Account ?{" "}
+                <Link className="text-secondary" to="/auth/register">
+                  Register
+                </Link>{" "}
+              </p>
       </div> 
     </div>
   );
