@@ -9,6 +9,8 @@ import UpdateVehicles from "../pages/UpdateVehicles";
 import MyVehicles from "../pages/MyVehicles";
 import MyBookings from "../pages/MyBookings";
 import Register from "../pages/Register";
+import Profile from "../pages/Profile";
+import AllVehicles from "../pages/AllVehicles";
 
 
 export const router = createBrowserRouter([
@@ -23,6 +25,8 @@ export const router = createBrowserRouter([
         },
         {
             path:'/all-vehicles',
+            loader: () => fetch('http://localhost:3000/all-vehicles'),
+            element: <AllVehicles></AllVehicles>
         },
         {
             path:'/vehicle-details/:id',
@@ -38,21 +42,25 @@ export const router = createBrowserRouter([
         },
         {
             path:'/add-vehicles',
-            element: <AddVehicles></AddVehicles>
+            element: <PrivateRoute><AddVehicles></AddVehicles></PrivateRoute>
         },
         {
             path:'/update-vehicles/:id',
-            element:<UpdateVehicles></UpdateVehicles>,
+            element:<PrivateRoute><UpdateVehicles></UpdateVehicles></PrivateRoute>,
             loader:({params})=>fetch(`http://localhost:3000/vehicles/${params.id}`)
         },
         {
             path:'/my-vehicles',
-            element:<MyVehicles></MyVehicles>
+            element:<PrivateRoute><MyVehicles></MyVehicles></PrivateRoute>
 
         },
         {
             path:'/my-bookings',
-            element:<MyBookings></MyBookings>
+            element:<PrivateRoute><MyBookings></MyBookings></PrivateRoute>
+        },
+        {
+            path:'/profile',
+            element:<PrivateRoute><Profile></Profile></PrivateRoute>
         }
     ]
   },

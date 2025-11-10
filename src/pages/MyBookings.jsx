@@ -5,10 +5,18 @@ import Swal from "sweetalert2";
 const MyBookings = () => {
   const { user } = use(AuthContext);
   const [bookings,setBookings] = useState([])
+  console.log('token',user.accessToken)
+
   useEffect(() => {
-    fetch(`http://localhost:3000/my-bookings?email=${user.email}`)
+    fetch(`http://localhost:3000/my-bookings?email=${user.email}`,{
+      headers:{
+        authorization: `Bearer ${user.accessToken}`
+      }
+    })
       .then((res) => res.json())
-      .then((data) => setBookings(data))
+      .then((data) => {setBookings(data)
+        console.log(data)
+      })
       .catch((error) => console.log(error));
   }, [user]);
 

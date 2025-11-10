@@ -7,7 +7,11 @@ const MyVehicles = () => {
   const { user } = use(AuthContext);
   const [myVehicles, setMyVehicles] = useState([]);
   useEffect(() => {
-    fetch(`http://localhost:3000/my-vehicles?email=${user.email}`)
+    fetch(`http://localhost:3000/my-vehicles?email=${user.email}`,{
+        headers:{
+            authorization: `Bearer ${user.accessToken}`
+        }
+    })
       .then((res) => res.json())
       .then((data) => {
         setMyVehicles(data);
@@ -53,7 +57,6 @@ const MyVehicles = () => {
                 <li>
                   <strong>Availability:</strong> {vehicle.availability}
                 </li>
-                
               </ul>
 
               <p className="text-gray-600 text-sm mt-3">
@@ -62,13 +65,19 @@ const MyVehicles = () => {
             </div>
 
             <div className="card-actions justify-end mt-4">
+                <Link
+                to={`/vehicle-details/${vehicle._id}`}
+                className="btn btn-primary"
+              >
+                View Details
+              </Link>
               <Link
                 to={`/update-vehicles/${vehicle._id}`}
                 className="btn btn-accent"
               >
                 Update
               </Link>
-              <button onClick={''} className="btn btn-outline">
+              <button onClick={""} className="btn btn-outline">
                 Delete
               </button>
             </div>

@@ -10,10 +10,14 @@ const VehicleDetails = () => {
   const navigate = useNavigate()
 
   useEffect(() => {
-    fetch(`http://localhost:3000/vehicles/${id}`)
+    fetch(`http://localhost:3000/vehicles/${id}`,{
+      headers:{
+            authorization: `Bearer ${user.accessToken}`
+        }
+    })
       .then((res) => res.json())
       .then((data) => setVehicle(data));
-  }, []);
+  }, [id,user]);
 
   const handleDelete = () => {
     fetch(`http://localhost:3000/vehicles/${vehicle._id}`, {
