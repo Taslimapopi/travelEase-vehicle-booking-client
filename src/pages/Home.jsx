@@ -1,9 +1,16 @@
-import React from 'react';
-import { useLoaderData } from 'react-router';
+import React, { useState } from 'react';
 import VehicleCard from '../components/VehicleCard';
+import useAxios from '../hooks/useAxios';
 
 const Home = () => {
-    const vehicles = useLoaderData();
+    
+    const useAxiosHook = useAxios();
+    const [vehicles,setVehicles] = useState([])
+
+    useAxiosHook('/vehicles')
+    .then(data=>{
+        setVehicles(data.data)
+    })
 
     return (
         <div>

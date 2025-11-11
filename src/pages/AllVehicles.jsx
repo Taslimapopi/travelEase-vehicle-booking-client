@@ -1,9 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import VehicleCard from '../components/VehicleCard';
-import { useLoaderData } from 'react-router';
+import useAxios from '../hooks/useAxios';
 
 const AllVehicles = () => {
-    const vehicles = useLoaderData()
+    const useAxiosHook = useAxios();
+    const [vehicles,setVehicles] = useState([])
+
+    useAxiosHook('/all-vehicles')
+    .then(data=>{
+        setVehicles(data.data)
+    })
+    
     return (
         <div>
             <div className='grid grid-cols-3 gap-1'>

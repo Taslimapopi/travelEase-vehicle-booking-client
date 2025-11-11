@@ -1,8 +1,12 @@
-import React, { use } from 'react';
+import React from 'react';
 import { AuthContext } from '../provider/context';
+import useAuth from '../hooks/useAuth';
+import useAxiosSecure from '../hooks/useAxiosSecure';
 
 const AddVehicles = () => {
-  const {user} = use(AuthContext)
+  // const {user} = use(AuthContext)
+  const {user} = useAuth();
+  const axiosSecure = useAxiosSecure();
 
   const handleAddVehicle = (e) => {
     e.preventDefault();
@@ -15,20 +19,27 @@ const AddVehicles = () => {
       created_at: new Date(),
       userEmail: user.email
     }
-    console.log(formData)
-    fetch('http://localhost:3000/vehicles',{
-      method: "POST",
-      headers:{
-        'content-type': 'application/json'
-      },
-      body: JSON.stringify(formData)
+   
+    // fetch('http://localhost:3000/vehicles',{
+    //   method: "POST",
+    //   headers:{
+    //     'content-type': 'application/json'
+    //   },
+    //   body: JSON.stringify(formData)
+    // })
+    // .then(res=>res.json())
+    // .then(data=>{
+    //   alert('vehicle added successfully')
+    //   e.target.reset()
+    // })
+    // .catch(error=>console.log(error))
+
+     axiosSecure.post('/vehicles', formData)
+    .then((data) => {
+        console.log('after secure call',data.data);
+        alert('vehicle added successfully')
+        e.target.reset()
     })
-    .then(res=>res.json())
-    .then(data=>{console.log('after post',data)
-      alert('vehicle added successfully')
-      e.target.reset()
-    })
-    .catch(error=>console.log(error))
 
   }
     return (

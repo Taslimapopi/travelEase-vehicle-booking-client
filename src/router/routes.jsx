@@ -21,11 +21,11 @@ export const router = createBrowserRouter([
         {
             index:true,
             element:<Home></Home>,
-            loader: () => fetch('http://localhost:3000/vehicles')
+            // loader: () => fetch('http://localhost:3000/vehicles')
         },
         {
             path:'/all-vehicles',
-            loader: () => fetch('http://localhost:3000/all-vehicles'),
+            // loader: () => fetch('http://localhost:3000/all-vehicles'),
             element: <AllVehicles></AllVehicles>
         },
         {

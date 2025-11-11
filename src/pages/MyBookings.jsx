@@ -1,24 +1,32 @@
 import React, { use, useEffect, useState } from "react";
 import { AuthContext } from "../provider/context";
 import Swal from "sweetalert2";
+import useAxiosSecure from "../hooks/useAxiosSecure";
 
 const MyBookings = () => {
   const { user } = use(AuthContext);
   const [bookings,setBookings] = useState([])
-  console.log('token',user.accessToken)
+  const axiouSecure = useAxiosSecure
 
   useEffect(() => {
-    fetch(`http://localhost:3000/my-bookings?email=${user.email}`,{
-      headers:{
-        authorization: `Bearer ${user.accessToken}`
-      }
+    // fetch(`http://localhost:3000/my-bookings?email=${user.email}`,{
+    //   headers:{
+    //     authorization: `Bearer ${user.accessToken}`
+    //   }
+    // })
+    //   .then((res) => res.json())
+    //   .then((data) => {setBookings(data)
+    
+    //   })
+    //   .catch((error) => console.log(error));
+
+    axiouSecure(`/my-bookings?email=${user.email}`)
+    .then(data=>{
+      setBookings(data.data)
+
     })
-      .then((res) => res.json())
-      .then((data) => {setBookings(data)
-        console.log(data)
-      })
-      .catch((error) => console.log(error));
-  }, [user]);
+
+  }, [user,axiouSecure]);
 
   const handleRemoveBookings = (_id) => {
     Swal.fire({
@@ -37,7 +45,6 @@ const MyBookings = () => {
         })
           .then((res) => res.json())
           .then((data) => {
-            console.log(data);
             if (data.deletedCount) {
               Swal.fire({
                 title: "Deleted!",

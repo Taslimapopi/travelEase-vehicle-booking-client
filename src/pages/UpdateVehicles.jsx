@@ -12,7 +12,7 @@ const UpdateVehicles = () => {
       description: e.target.description.value,
       coverImage: e.target.thumbnail.value,
     };
-    console.log(formData);
+    
     fetch(`http://localhost:3000/vehicles/${vehicle._id}`, {
       method: "PUT",
       headers: {
@@ -22,7 +22,7 @@ const UpdateVehicles = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log("after post", data);
+        
         alert("vehicle added successfully");
         e.target.reset();
       })

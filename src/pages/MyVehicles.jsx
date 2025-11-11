@@ -2,23 +2,37 @@ import React, { use, useState } from "react";
 import { AuthContext } from "../provider/context";
 import { useEffect } from "react";
 import { Link } from "react-router";
+import useAuth from "../hooks/useAuth";
+import useAxiosSecure from "../hooks/useAxiosSecure";
 
 const MyVehicles = () => {
-  const { user } = use(AuthContext);
+//   const { user } = use(AuthContext);
+  const {user} = useAuth()
   const [myVehicles, setMyVehicles] = useState([]);
+  const axiosSecure = useAxiosSecure()
   useEffect(() => {
-    fetch(`http://localhost:3000/my-vehicles?email=${user.email}`,{
-        headers:{
-            authorization: `Bearer ${user.accessToken}`
-        }
+    // fetch(`http://localhost:3000/my-vehicles?email=${user.email}`,{
+    //     headers:{
+    //         authorization: `Bearer ${user.accessToken}`
+    //     }
+    // })
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     setMyVehicles(data);
+        
+    //   })
+    //   .catch((error) => console.log(error));
+
+    axiosSecure(`/my-vehicles?email=${user.email}`)
+    .then(data=>{
+        setMyVehicles(data.data)
     })
-      .then((res) => res.json())
-      .then((data) => {
-        setMyVehicles(data);
-        console.log(data);
-      })
-      .catch((error) => console.log(error));
-  }, [user]);
+    .catch(error=>console.log(error))
+
+
+  }, [user,axiosSecure]);
+
+
   return (
     <div>
       {myVehicles.map((vehicle) => (
