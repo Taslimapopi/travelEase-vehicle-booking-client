@@ -1,4 +1,4 @@
-import React, { use } from 'react';
+import React, { use, useEffect, useState } from 'react';
 import { AuthContext } from '../provider/context';
 import { Link, NavLink } from 'react-router';
 import { GoHomeFill } from 'react-icons/go';
@@ -16,6 +16,21 @@ const NavBar = () => {
     const handleLogOut = () =>{
         logOut()
     }
+
+    const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+
+
+  useEffect(() => {
+    const html = document.querySelector("html");
+    html.setAttribute("data-theme", theme);
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+
+
+  const handleTheme = (checked) => {
+    setTheme(checked ? "dark" : "light");
+  };
+
     return (
         <div className="navbar py-0 min-h-0 z-1 shadow-sm rounded-full glass-card max-w-7xl">
       <div className="navbar-start">
@@ -121,11 +136,11 @@ const NavBar = () => {
                 </Link>
               </li>
 
-              {/* <input
+              <input
            onChange={(e)=> handleTheme(e.target.checked)}
            type="checkbox"
            defaultChecked={localStorage.getItem('theme') === "dark"}
-           className="toggle"/> */}
+           className="toggle"/>
               
               <li>
                 <a>
