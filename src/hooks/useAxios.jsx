@@ -6,7 +6,8 @@ const axiosInstance = axios.create({
 });
 
 const useAxios = () => {
-    return axiosInstance;
+    // return axiosInstance;
+      return (endpoint, params = {}) => axiosInstance.get(endpoint, { params });
 }
 
 export default useAxios;

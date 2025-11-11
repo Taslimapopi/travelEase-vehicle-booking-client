@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import VehicleCard from '../components/VehicleCard';
 import useAxios from '../hooks/useAxios';
+import Banner from '../components/Banner';
 
 const Home = () => {
     
@@ -14,6 +15,9 @@ const Home = () => {
 
     return (
         <div>
+            <div>
+                <Banner></Banner>
+            </div>
             <div className='grid grid-cols-3 gap-1'>
             {
                 vehicles.map(vehicle=> 

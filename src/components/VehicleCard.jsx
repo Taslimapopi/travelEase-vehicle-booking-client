@@ -5,7 +5,9 @@ import { Link } from "react-router";
 
 const VehicleCard = ({ vehicle }) => {
   return (
-    <div className="max-w-sm mx-auto bg-white shadow-lg rounded-xl overflow-hidden border border-gray-200 hover:shadow-2xl transition-shadow duration-300 px-5 pt-3">
+    <div className="bg-white rounded-xl shadow-md border border-gray-200 
+                flex flex-col justify-between 
+                h-full w-full p-4 hover:shadow-2xl transition-all duration-300">
       
       {/* Vehicle Name on top */}
       <div className="bg-gray-100 py-3 text-center">
@@ -18,7 +20,7 @@ const VehicleCard = ({ vehicle }) => {
       <img
         src={vehicle.coverImage}
         alt={vehicle.vehicleName}
-        className="w-full h-56 object-cover"
+        className="w-full h-56 object-cover rounded-lg"
       />
 
       {/* Details */}

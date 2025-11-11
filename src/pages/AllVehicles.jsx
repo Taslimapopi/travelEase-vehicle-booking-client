@@ -1,27 +1,80 @@
-import React, { useState } from 'react';
-import VehicleCard from '../components/VehicleCard';
-import useAxios from '../hooks/useAxios';
+import React, { useEffect, useState } from "react";
+import VehicleCard from "../components/VehicleCard";
+import useAxios from "../hooks/useAxios";
 
 const AllVehicles = () => {
-    const useAxiosHook = useAxios();
-    const [vehicles,setVehicles] = useState([])
+  const axiosHook = useAxios();
+  const [vehicles, setVehicles] = useState([]);
+  const [sortOrder, setSortOrder] = useState("");
 
-    useAxiosHook('/all-vehicles')
-    .then(data=>{
-        setVehicles(data.data)
-    })
-    
-    return (
-        <div>
-            <div className='grid grid-cols-3 gap-1'>
-            {
-                vehicles.map(vehicle=> 
-                    <VehicleCard vehicle={vehicle}></VehicleCard>
-                )
-            }
-            </div>
-        </div>
-    );
+  //   useAxiosHook("/all-vehicles").then((data) => {
+  //     setVehicles(data.data);
+  //   });
+
+  // 🔁 fetch vehicles when sort order changes
+  useEffect(() => {
+    const fetchVehicles = async () => {
+      try {
+        const response = await axiosHook(`/all-vehicles?sort=${sortOrder}`);
+        setVehicles(response.data);
+      } catch (error) {
+        console.error("❌ Error fetching vehicles:", error);
+      }
+    };
+
+    fetchVehicles(); // ✅ এখন এটা function call
+  }, [sortOrder, axiosHook]);
+
+  return (
+    <div>
+      {/* Sorting buttons */}
+      {/* <div className="flex justify-center mb-6 space-x-4">
+        <button
+          onClick={() => setSortOrder("asc")}
+          className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
+        >
+          Sort by Price ↑ (Low to High)
+        </button>
+
+        <button
+          onClick={() => setSortOrder("dsc")}
+          className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition"
+        >
+          Sort by Price ↓ (High to Low)
+        </button>
+      </div> */}
+      <div className="flex justify-end mb-6 bg-white shadow-md rounded-lg px-6 py-3 space-x-8">
+        <label className="flex items-center gap-2 cursor-pointer hover:text-blue-600 transition">
+          <input
+            type="radio"
+            name="sort"
+            value="asc"
+            checked={sortOrder === "asc"}
+            onChange={(e) => setSortOrder(e.target.value)}
+            className="appearance-none w-5 h-5 border-2 border-gray-400 rounded-full checked:border-blue-600 checked:bg-blue-600 transition"
+          />
+          <span className="font-medium">Price ↑ (Low → High)</span>
+        </label>
+
+        <label className="flex items-center gap-2 cursor-pointer hover:text-green-600 transition">
+          <input
+            type="radio"
+            name="sort"
+            value="dsc"
+            checked={sortOrder === "dsc"}
+            onChange={(e) => setSortOrder(e.target.value)}
+            className="appearance-none w-5 h-5 border-2 border-gray-400 rounded-full checked:border-green-600 checked:bg-green-600 transition"
+          />
+          <span className="font-medium">Price ↓ (High → Low)</span>
+        </label>
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 place-items-stretch">
+        {vehicles.map((vehicle) => (
+          <VehicleCard vehicle={vehicle}></VehicleCard>
+        ))}
+      </div>
+    </div>
+  );
 };
 
 export default AllVehicles;
