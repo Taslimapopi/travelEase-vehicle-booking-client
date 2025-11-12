@@ -35,43 +35,75 @@ const MyVehicles = () => {
       .catch((error) => console.log(error));
   }, [user, axiosSecure]);
 
+  // const handleDelete = (id) => {
+  //   fetch(`http://localhost:3000/vehicles/${id}`, {
+  //     method: "DELETE",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //   }).then((res) => res.json());
+  //   Swal.fire({
+  //     title: "Are you sure?",
+  //     text: "You won't be able to revert this!",
+  //     icon: "warning",
+  //     showCancelButton: true,
+  //     confirmButtonColor: "#3085d6",
+  //     cancelButtonColor: "#d33",
+  //     confirmButtonText: "Yes, delete it!",
+  //   })
+  //     .then((data) => {
+  //       if (data.isConfirmed) {
+  //         Swal.fire({
+  //           title: "Deleted!",
+  //           text: "Your file has been deleted.",
+  //           icon: "success",
+  //         });
+  //       }
+  //       setMyVehicles((prev) => prev.filter((vehicle) => vehicle._id !== id));
+  //     })
+  //     .catch((error) => console.log(error));
+  // };
   const handleDelete = (id) => {
-    fetch(`http://localhost:3000/vehicles/${id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }).then((res) => res.json());
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
-    })
-      .then((data) => {
-        if (data.isConfirmed) {
+  Swal.fire({
+    title: "Are you sure?",
+    text: "You won't be able to revert this!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, delete it!",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      // ✅ এখনই DELETE রিকোয়েস্ট পাঠানো হবে
+      fetch(`http://localhost:3000/vehicles/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res) => res.json())
+        .then(() => {
+          
           Swal.fire({
             title: "Deleted!",
-            text: "Your file has been deleted.",
+            text: "Your vehicle has been deleted.",
             icon: "success",
           });
-        }
-        setMyVehicles((prev) => prev.filter((vehicle) => vehicle._id !== id));
-      })
-      .catch((error) => console.log(error));
-  };
+
+        
+          setMyVehicles((prev) => prev.filter((v) => v._id !== id));
+        })
+        .catch((error) => console.log(error));
+    }
+  });
+};
 
   if (loading) return <LoadingSpinner />;
 
   return (
-     <div className="p-5">
+    <div className="p-5">
       {/* 🔹 Title */}
-      <h2 className="text-3xl font-bold text-center mb-8">
-        My Added Vehicles
-      </h2>
+      <h2 className="text-3xl font-bold text-center mb-8">My Added Vehicles</h2>
 
       {/* 🔹 Empty State */}
       {myVehicles.length === 0 ? (
