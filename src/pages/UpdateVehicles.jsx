@@ -1,8 +1,13 @@
-import React from "react";
-import { useLoaderData } from "react-router";
+import React, { useState } from "react";
+import { useLoaderData, useNavigate } from "react-router";
+import useAuth from "../hooks/useAuth";
 
 const UpdateVehicles = () => {
+  const {user} = useAuth()
   const vehicle = useLoaderData();
+  console.log(vehicle,user)
+  const navigate = useNavigate();
+
   const handleUpdateVehicle = (e) => {
     e.preventDefault();
     const formData = {
@@ -23,7 +28,9 @@ const UpdateVehicles = () => {
       .then((res) => res.json())
       .then((data) => {
         
-        alert("vehicle added successfully");
+        
+        alert("vehicle updated successfully");
+        navigate('/my-vehicles')
         e.target.reset();
       })
       .catch((error) => console.log(error));
@@ -32,7 +39,7 @@ const UpdateVehicles = () => {
   return (
     <div className="card border border-gray-200 bg-base-100 w-full max-w-md mx-auto shadow-2xl rounded-2xl">
       <div className="card-body p-6 relative">
-        <h2 className="text-2xl font-bold text-center mb-6">Add New Model</h2>
+        <h2 className="text-2xl font-bold text-center mb-6">Update Your Model</h2>
         <form onSubmit={handleUpdateVehicle} className="space-y-4">
           {/*vehicle Name Field */}
           <div>

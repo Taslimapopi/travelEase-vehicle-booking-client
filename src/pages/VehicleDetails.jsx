@@ -55,23 +55,23 @@ const VehicleDetails = () => {
     const pickUpTimeDate = parseISO(pickUpTimeRaw);
     const returnTimeDate = parseISO(returnTimeRaw);
 
-    // Optional: ফরম্যাট করা string
+    
     const formattedPickUpTime = format(
       pickUpTimeDate,
       "yyyy-MM-dd'T'HH:mm:ssxxx"
-    ); // ISO string with timezone
+    ); 
     const formattedReturnTime = format(
       returnTimeDate,
       "yyyy-MM-dd'T'HH:mm:ssxxx"
     );
 
-    // Optional: Validate pick up before return
+    
     if (isBefore(returnTimeDate, pickUpTimeDate)) {
       alert("Return time must be after pick up time");
       return;
     }
 
-    // তারপর bookData তে assign করো:
+    
     const bookData = {
       user: e.target.userName.value,
       vehicleName: e.target.vehicleName.value,
@@ -100,7 +100,7 @@ const VehicleDetails = () => {
   return (
     <div className="p-5 flex justify-center ">
       <div className="card lg:card-side bg-base-100 shadow-xl w-full max-w-5xl">
-        {/* ✅ Image section */}
+        {/*   Image section */}
         <figure className="flex-shrink-0 w-full lg:w-[45%] h-[350px] pt-7 ">
           <img
             src={vehicle.coverImage}
@@ -109,7 +109,7 @@ const VehicleDetails = () => {
           />
         </figure>
 
-        {/* ✅ Content section */}
+        {/* Content section */}
         <div className="card-body w-full lg:w-[55%]">
           <div className="bg-gray-100 py-3 text-center rounded">
             <h2 className="text-lg font-bold text-gray-800 uppercase tracking-wide">

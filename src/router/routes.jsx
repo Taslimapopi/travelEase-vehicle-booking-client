@@ -12,12 +12,14 @@ import Register from "../pages/Register";
 import Profile from "../pages/Profile";
 import AllVehicles from "../pages/AllVehicles";
 import NotFound from "../pages/NotFound";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <Homelayout></Homelayout>,
+    hydrateFallbackElement: <LoadingSpinner></LoadingSpinner>,
     children:[
         {
             index:true,

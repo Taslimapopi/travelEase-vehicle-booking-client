@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { Link } from "react-router";
 import useAuth from "../hooks/useAuth";
 import useAxiosSecure from "../hooks/useAxiosSecure";
+import useAxios from "../hooks/useAxios";
 
 const MyVehicles = () => {
 //   const { user } = use(AuthContext);
@@ -31,6 +32,24 @@ const MyVehicles = () => {
 
 
   }, [user,axiosSecure]);
+
+  
+
+  const handleDelete = (id) => {
+  fetch(`http://localhost:3000/vehicles/${id}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      alert("Data deleted");
+      // Deleted vehicle কে state থেকে রিমুভ করো
+      setMyVehicles(prev => prev.filter(vehicle => vehicle._id !== id));
+    })
+    .catch((error) => console.log(error));
+};
 
 
   return (
@@ -91,7 +110,7 @@ const MyVehicles = () => {
               >
                 Update
               </Link>
-              <button onClick={""} className="btn btn-outline">
+              <button onClick={() => handleDelete(vehicle._id)} className="btn btn-outline">
                 Delete
               </button>
             </div>
