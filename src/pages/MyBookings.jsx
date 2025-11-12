@@ -63,83 +63,74 @@ const MyBookings = () => {
     });
   };
   return (
-    <div>
-      <div>
-        <h3 className="font-bold text-primary">
-          My Total Bookings: {bookings.length}
-        </h3>
-        <div className="overflow-x-auto">
-          <table className="table">
-            {/* head */}
-            <thead>
-              <tr>
-                <th>
-                  <label>SL No</label>
-                </th>
-                <th>Vehicle Name</th>
-                <th>Location </th>
-                <th>PickUp Time</th>
-                <th>Return Time</th>
-                {/* <th>Status</th> */}
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {/* row 1 */}
-              {loading && <LoadingSpinner/>}
-              {bookings.map((b, index) => (
-                <tr>
-                  <th>
-                    <label>{index + 1}</label>
-                  </th>
-                  <td>
-                    <div className="flex items-center gap-3">
-                      {/* <div className="avatar">
-                        <div className="mask mask-squircle h-12 w-12">
-                          <img
-                            src="https://img.daisyui.com/images/profile/demo/4@94.webp"
-                            alt="Avatar Tailwind CSS Component"
-                          />
-                        </div>
-                      </div> */}
-                      <div>
-                        <div className="font-bold">{b.vehicleName}</div>
-                      </div>
-                    </div>
-                  </td>
-                  <td>
-                    {b.location}
-                    <br />
-                  </td>
-                  <td>{b.pickUpTime}</td>
-                  <td>{b.pickUpTime}</td>
-                  {/* <th>
-                    {bid.status === "pending" ? (
-                      <div className="badge badge-warning">{bid.status}</div>
-                    ) : (
-                      <div className="badge badge-success">{bid.status}</div>
-                    )}
-                  </th> */}
-                  <th>
-                    <button
-                      onClick={() => handleRemoveBookings(b._id)}
-                      className="btn btn-outline btn-xs"
-                    >
-                      Delete Bookings
-                    </button>
-                  </th>
-                </tr>
-              ))}
+    <div className="p-4">
+  <h3 className="font-bold text-primary text-lg mb-4 text-center md:text-left">
+    My Total Bookings: {bookings.length}
+  </h3>
 
-              {/* row 2 */}
-              {/* row 3 */}
-              {/* row 4 */}
-            </tbody>
-            {/* foot */}
-          </table>
-        </div>
-      </div>
-    </div>
+  {/* Table container with horizontal scroll on small screens */}
+  <div className="overflow-x-auto bg-base-100 shadow-lg rounded-lg">
+    <table className="table table-zebra w-full">
+      {/* Table Head */}
+      <thead className="bg-primary text-white text-sm md:text-base">
+        <tr>
+          <th>SL No</th>
+          <th>Vehicle Name</th>
+          <th>Location</th>
+          <th>PickUp Time</th>
+          <th>Return Time</th>
+          <th className="text-center">Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {loading && (
+          <tr>
+            <td colSpan="6" className="text-center py-5">
+              <LoadingSpinner />
+            </td>
+          </tr>
+        )}
+
+        {bookings.map((b, index) => (
+          <tr
+            key={b._id}
+            className="hover:bg-gray-100 transition duration-200 ease-in-out"
+          >
+            <td className="text-sm md:text-base">{index + 1}</td>
+            <td className="font-semibold text-sm md:text-base">
+              {b.vehicleName}
+            </td>
+            <td className="text-sm md:text-base">{b.location}</td>
+            <td className="text-sm md:text-base break-all">
+              {b.pickUpTime}
+            </td>
+            <td className="text-sm md:text-base break-all">
+              {b.returnTime}
+            </td>
+            <td className="text-center">
+              <button
+                onClick={() => handleRemoveBookings(b._id)}
+                className="btn btn-outline btn-xs md:btn-sm hover:btn-error"
+              >
+                Delete
+              </button>
+            </td>
+          </tr>
+        ))}
+
+        {!loading && bookings.length === 0 && (
+          <tr>
+            <td colSpan="6" className="text-center py-6 text-gray-500">
+              You have no bookings yet.
+            </td>
+          </tr>
+        )}
+      </tbody>
+    </table>
+  </div>
+</div>
+
   );
 };
 

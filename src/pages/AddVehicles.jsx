@@ -4,6 +4,7 @@ import useAuth from "../hooks/useAuth";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import LoadingSpinner from "../components/LoadingSpinner";
 import { toast } from "react-toastify";
+import { format } from "date-fns";
 
 const AddVehicles = () => {
   // const {user} = use(AuthContext)
@@ -22,7 +23,8 @@ const AddVehicles = () => {
       seatCapacity: e.target.seatCapacity.value,
       detailsDesc: e.target.description.value,
       coverImage: e.target.thumbnail.value,
-      created_at: new Date(),
+      // created_at: new Date(),
+      created_at: format(new Date(), "PPPpp"),
       userEmail: user.email,
     };
 

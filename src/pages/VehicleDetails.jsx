@@ -3,6 +3,7 @@ import { Link, useNavigate, useParams } from "react-router";
 import { AuthContext } from "../provider/context";
 import { format, parseISO, isBefore } from "date-fns";
 import Swal from "sweetalert2";
+import { toast } from "react-toastify";
 
 const VehicleDetails = () => {
   const { id } = useParams();
@@ -55,14 +56,6 @@ const VehicleDetails = () => {
 
   const handleBookForm = (e) => {
     e.preventDefault();
-    // const bookData = {
-    //   user: e.target.userName.value,
-    //   vehicleName: e.target.vehicleName.value,
-    //   pickUpTime: e.target.pickingTime.value,
-    //   returnTime: e.target.returnTime.value,
-    //   location: e.target.location.value,
-    //   email: e.target.email.value,
-    // };
 
     const pickUpTimeRaw = e.target.pickingTime.value; // string from input
     const returnTimeRaw = e.target.returnTime.value;
@@ -86,9 +79,9 @@ const VehicleDetails = () => {
     }
 
     const bookData = {
-      user: e.target.userName.value,
+      // user: user.displayName,
       vehicleName: e.target.vehicleName.value,
-      pickUpTime: formattedPickUpTime, // or pickUpTimeRaw if formatting not needed
+      pickUpTime: formattedPickUpTime,
       returnTime: formattedReturnTime,
       location: e.target.location.value,
       email: e.target.email.value,
@@ -104,8 +97,12 @@ const VehicleDetails = () => {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
+        toast.success("Successfully Booked! have a nice trip");
         e.target.reset();
-        navigate("/");
+        // navigate("/");
+        if (bookModalRef.current) {
+      bookModalRef.current.close();
+    }
       })
       .catch((error) => console.log(error));
   };
@@ -162,15 +159,10 @@ const VehicleDetails = () => {
             <button onClick={handleBookModalRef} className="btn btn_common">
               Book Now
             </button>
-            <Link
-              to={`/update-vehicles/${vehicle._id}`}
-              className="btn btn-accent"
-            >
-              Update
+
+            <Link onClick={() => navigate(-1)} className="btn btn-accent">
+              Go Back
             </Link>
-            {/* <button onClick={handleDelete} className="btn btn-outline">
-              Delete
-            </button> */}
           </div>
         </div>
       </div>
@@ -182,12 +174,10 @@ const VehicleDetails = () => {
         <div className="modal-box">
           <h3 className="font-bold text-2xl text-center text-green-700">
             Ready to Ride? Book Your Vehicle Now!
-            <br />
-            <p className="text-center">🚗</p>
           </h3>
           <form onSubmit={handleBookForm}>
             <fieldset className="fieldset space-y-2">
-              {/* Name */}
+              {/* Name
               <label className="label font-semibold">Name</label>
               <input
                 type="text"
@@ -196,7 +186,7 @@ const VehicleDetails = () => {
                 className="input input-bordered w-full"
                 placeholder="Enter your name"
                 required
-              />
+              /> */}
 
               {/* Vehicle Name */}
               <label className="label font-semibold">Vehicle Name</label>
@@ -210,37 +200,30 @@ const VehicleDetails = () => {
                 required
               />
 
-              {/* Pickup Time */}
-              {/* <label className="label font-semibold">Pickup Time</label>
-              <input
-                type="datetime-local"
-                name="pickingTime"
-                className="input input-bordered w-full"
-                required
-              /> */}
-              <input
-                type="datetime-local"
-                name="pickingTime"
-                className="input input-bordered w-full"
-                min={format(new Date(), "yyyy-MM-dd'T'HH:mm")} // আজকের সময় থেকে ছোট কিছু নেওয়া যাবে না
-                required
-              />
+              <div className="flex gap-3">
+                <div>
+                  {/* Pickup Time */}
 
-              {/* Return Time */}
-              {/* <label className="label font-semibold">Return Time</label>
-              <input
-                type="datetime-local"
-                name="returnTime"
-                className="input input-bordered w-full"
-                required
-              /> */}
-              <input
-                type="datetime-local"
-                name="returnTime"
-                className="input input-bordered w-full"
-                min={format(new Date(), "yyyy-MM-dd'T'HH:mm")} // অথবা pickUpTime থেকে কম সময় নেয়া যাবে না
-                required
-              />
+                  <label className="label font-semibold">Pick Up Time</label>
+                  <input
+                    type="datetime-local"
+                    name="pickingTime"
+                    className="input input-bordered w-full"
+                    min={format(new Date(), "yyyy-MM-dd'T'HH:mm")}
+                  />
+                </div>
+                <div>
+                  {/* Return time */}
+                  <label className="label font-semibold">Return Time</label>
+                  <input
+                    type="datetime-local"
+                    name="returnTime"
+                    className="input input-bordered w-full"
+                    min={format(new Date(), "yyyy-MM-dd'T'HH:mm")}
+                    required
+                  />
+                </div>
+              </div>
 
               {/* Pickup Location */}
               <label className="label font-semibold">Pickup Location</label>
@@ -263,13 +246,13 @@ const VehicleDetails = () => {
                 required
               />
 
-              <button className="btn btn-accent mt-4 w-full">Book Now</button>
+              <button type="submit" className="btn btn-accent mt-4 w-full">Book Now</button>
             </fieldset>
           </form>
 
           <div className="modal-action">
             <form method="dialog">
-              {/* if there is a button in form, it will close the modal */}
+              
               <button className="btn">Close</button>
             </form>
           </div>
