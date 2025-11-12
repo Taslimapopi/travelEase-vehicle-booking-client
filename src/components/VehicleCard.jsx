@@ -49,9 +49,7 @@ const VehicleCard = ({ vehicle }) => {
           </li>
         </ul>
 
-        <p className="text-gray-600 text-sm mt-3">
-          {vehicle.description.slice(0, 90)}...
-        </p>
+
 
         <div className="mt-4 text-center">
                 <Link

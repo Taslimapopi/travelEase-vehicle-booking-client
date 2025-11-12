@@ -1,25 +1,31 @@
-import React from 'react';
-import { AuthContext } from '../provider/context';
-import useAuth from '../hooks/useAuth';
-import useAxiosSecure from '../hooks/useAxiosSecure';
+import React from "react";
+import { AuthContext } from "../provider/context";
+import useAuth from "../hooks/useAuth";
+import useAxiosSecure from "../hooks/useAxiosSecure";
+import LoadingSpinner from "../components/LoadingSpinner";
+import { toast } from "react-toastify";
 
 const AddVehicles = () => {
   // const {user} = use(AuthContext)
-  const {user} = useAuth();
+  const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
 
   const handleAddVehicle = (e) => {
     e.preventDefault();
     const formData = {
-            vehicleName: e.target.name.value,
-      owner : e.target.ownerName.value,
+      vehicleName: e.target.name.value,
+      owner: e.target.ownerName.value,
       category: e.target.category.value,
-      description: e.target.description.value,
+      pricePerDay: e.target.pricePerDay.value,
+      location: e.target.location.value,
+      availability: e.target.availability.value,
+      seatCapacity: e.target.seatCapacity.value,
+      detailsDesc: e.target.description.value,
       coverImage: e.target.thumbnail.value,
       created_at: new Date(),
-      userEmail: user.email
-    }
-   
+      userEmail: user.email,
+    };
+
     // fetch('http://localhost:3000/vehicles',{
     //   method: "POST",
     //   headers:{
@@ -34,18 +40,16 @@ const AddVehicles = () => {
     // })
     // .catch(error=>console.log(error))
 
-     axiosSecure.post('/vehicles', formData)
-    .then((data) => {
-        console.log('after secure call',data.data);
-        alert('vehicle added successfully')
-        e.target.reset()
-    })
-
-  }
-    return (
-        <div className="card border border-gray-200 bg-base-100 w-full max-w-md mx-auto shadow-2xl rounded-2xl">
+    axiosSecure.post("/vehicles", formData).then((data) => {
+      console.log("after secure call", data.data);
+      toast.success("New vehicle added successfully");
+      e.target.reset();
+    });
+  };
+  return (
+    <div className="card border border-gray-200 bg-base-100 w-full max-w-md mx-auto shadow-2xl rounded-2xl">
       <div className="card-body p-6 relative">
-        <h2 className="text-2xl font-bold text-center mb-6">Add New Model</h2>
+        <h2 className="text-2xl font-bold text-center mb-6">Add New Vehicle</h2>
         <form onSubmit={handleAddVehicle} className="space-y-4">
           {/*vehicle Name Field */}
           <div>
@@ -64,9 +68,54 @@ const AddVehicles = () => {
             <input
               type="text"
               name="ownerName"
+              defaultValue={user.displayName}
               required
               className="input w-full rounded-full focus:border-0 focus:outline-gray-200"
               placeholder="Enter name"
+            />
+          </div>
+          {/* price per day */}
+          <div>
+            <label className="label font-medium">Price Per Day</label>
+            <input
+              type="text"
+              name="pricePerDay"
+              required
+              className="input w-full rounded-full focus:border-0 focus:outline-gray-200"
+              placeholder="Enter Price Per day"
+            />
+          </div>
+          {/* location */}
+          <div>
+            <label className="label font-medium">Location</label>
+            <input
+              type="text"
+              name="location"
+              required
+              className="input w-full rounded-full focus:border-0 focus:outline-gray-200"
+              placeholder="Enter Location"
+            />
+          </div>
+          {/* availability */}
+          <div>
+            <label className="label font-medium">Availability</label>
+            <input
+              type="text"
+              name="availability"
+              required
+              className="input w-full rounded-full focus:border-0 focus:outline-gray-200"
+              placeholder="Availability"
+            />
+          </div>
+          {/* seatCapacity */}
+          <div>
+            <label className="label font-medium">Seat Capacity</label>
+            <input
+              type="text"
+              name="seatCapacity"
+              required
+              className="input w-full rounded-full focus:border-0 focus:outline-gray-200"
+              placeholder="seatCapacity"
             />
           </div>
 
@@ -97,25 +146,25 @@ const AddVehicles = () => {
               name="description"
               required
               rows="3"
-             className="textarea w-full rounded-2xl focus:border-0 focus:outline-gray-200 h-[250px]"
+              className="textarea w-full rounded-2xl focus:border-0 focus:outline-gray-200 h-[250px]"
               placeholder="Enter description"
             ></textarea>
           </div>
           {/* email */}
-          {/* <div>
+          <div>
             <label className="label font-medium">Email</label>
             <input
               type="email"
               name="email"
+              defaultValue={user.email}
+              readOnly
               required
               className="input w-full rounded-full focus:border-0 focus:outline-gray-200"
               placeholder="Enter email"
             />
-          </div> */}
+          </div>
           {/* created at */}
 
-          
-        
           {/* Thumbnail URL */}
           <div>
             <label className="label font-medium">Thumbnail URL</label>
@@ -131,14 +180,14 @@ const AddVehicles = () => {
           {/* Submit Button */}
           <button
             type="submit"
-            className="btn w-full text-white mt-6 rounded-full bg-linear-to-r from-pink-500 to-red-600 hover:from-pink-600 hover:to-red-700"
+            className="btn w-full text-white mt-6 rounded-full btn_common  hover:to-red-700"
           >
             Add Vehicle
           </button>
         </form>
       </div>
     </div>
-    );
+  );
 };
 
 export default AddVehicles;

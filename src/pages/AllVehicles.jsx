@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import VehicleCard from "../components/VehicleCard";
 import useAxios from "../hooks/useAxios";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 const AllVehicles = () => {
   const axiosHook = useAxios();
   const [vehicles, setVehicles] = useState([]);
   const [sortOrder, setSortOrder] = useState("");
+  const [loading, setLoading] = useState(true)
 
   //   useAxiosHook("/all-vehicles").then((data) => {
   //     setVehicles(data.data);
@@ -17,6 +19,7 @@ const AllVehicles = () => {
       try {
         const response = await axiosHook(`/all-vehicles?sort=${sortOrder}`);
         setVehicles(response.data);
+        setLoading(false)
       } catch (error) {
         console.error("❌ Error fetching vehicles:", error);
       }
@@ -27,6 +30,9 @@ const AllVehicles = () => {
 
   return (
     <div>
+      <h1 className="text-4xl font-extrabold text-center text-gray-900 mb-2 mt-4">
+          Adventure Awaits — Choose Your Ride
+        </h1>
       {/* Sorting buttons */}
 
       <div className="flex justify-end mb-6 bg-white shadow-md rounded-lg px-6 py-3 space-x-8">
@@ -54,6 +60,9 @@ const AllVehicles = () => {
           <span className="font-medium">Price ↓ (High → Low)</span>
         </label>
       </div>
+      {
+        loading && <LoadingSpinner/>
+      }
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 place-items-stretch">
         {vehicles.map((vehicle) => (
           <VehicleCard vehicle={vehicle}></VehicleCard>

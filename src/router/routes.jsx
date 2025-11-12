@@ -45,7 +45,8 @@ export const router = createBrowserRouter([
         },
         {
             path:'/add-vehicles',
-            element: <PrivateRoute><AddVehicles></AddVehicles></PrivateRoute>
+            element: <PrivateRoute><AddVehicles></AddVehicles></PrivateRoute>,
+            hydrateFallbackElement: <LoadingSpinner></LoadingSpinner>
         },
         {
             path:'/update-vehicles/:id',

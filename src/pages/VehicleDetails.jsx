@@ -2,6 +2,7 @@ import React, { use, useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router";
 import { AuthContext } from "../provider/context";
 import { format, parseISO, isBefore } from "date-fns";
+import Swal from "sweetalert2";
 
 const VehicleDetails = () => {
   const { id } = useParams();
@@ -9,7 +10,6 @@ const VehicleDetails = () => {
   const bookModalRef = useRef(null);
   const { user } = use(AuthContext);
   const navigate = useNavigate();
-  
 
   useEffect(() => {
     fetch(`http://localhost:3000/vehicles/${id}`, {
@@ -21,17 +21,33 @@ const VehicleDetails = () => {
       .then((data) => setVehicle(data));
   }, [id, user]);
 
-  const handleDelete = () => {
-    fetch(`http://localhost:3000/vehicles/${vehicle._id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => console.log(data))
-      .catch((error) => console.log(error));
-  };
+  // const handleDelete = () => {
+  //   fetch(`http://localhost:3000/vehicles/${vehicle._id}`, {
+  //     method: "DELETE",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //   }).then((res) => res.json());
+  //   Swal.fire({
+  //     title: "Are you sure?",
+  //     text: "You won't be able to revert this!",
+  //     icon: "warning",
+  //     showCancelButton: true,
+  //     confirmButtonColor: "#3085d6",
+  //     cancelButtonColor: "#d33",
+  //     confirmButtonText: "Yes, delete it!",
+  //   })
+  //     .then((data) => {
+  //       if (data.isConfirmed) {
+  //         Swal.fire({
+  //           title: "Deleted!",
+  //           text: "Your file has been deleted.",
+  //           icon: "success",
+  //         });
+  //       }
+  //     })
+  //     .catch((error) => console.log(error));
+  // };
 
   const handleBookModalRef = () => {
     bookModalRef.current.showModal();
@@ -55,23 +71,20 @@ const VehicleDetails = () => {
     const pickUpTimeDate = parseISO(pickUpTimeRaw);
     const returnTimeDate = parseISO(returnTimeRaw);
 
-    
     const formattedPickUpTime = format(
       pickUpTimeDate,
       "yyyy-MM-dd'T'HH:mm:ssxxx"
-    ); 
+    );
     const formattedReturnTime = format(
       returnTimeDate,
       "yyyy-MM-dd'T'HH:mm:ssxxx"
     );
 
-    
     if (isBefore(returnTimeDate, pickUpTimeDate)) {
       alert("Return time must be after pick up time");
       return;
     }
 
-    
     const bookData = {
       user: e.target.userName.value,
       vehicleName: e.target.vehicleName.value,
@@ -146,7 +159,7 @@ const VehicleDetails = () => {
           </div>
 
           <div className="card-actions justify-end mt-4">
-            <button onClick={handleBookModalRef} className="btn btn-primary">
+            <button onClick={handleBookModalRef} className="btn btn_common">
               Book Now
             </button>
             <Link
@@ -155,9 +168,9 @@ const VehicleDetails = () => {
             >
               Update
             </Link>
-            <button onClick={handleDelete} className="btn btn-outline">
+            {/* <button onClick={handleDelete} className="btn btn-outline">
               Delete
-            </button>
+            </button> */}
           </div>
         </div>
       </div>

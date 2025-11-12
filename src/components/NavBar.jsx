@@ -63,9 +63,15 @@ const NavBar = () => {
                 Home
               </NavLink>
             </li>
+            
             <li>
-              <NavLink to={"/all-models"}>
-                <IoLogoModelS /> All Models
+              <NavLink to={"/all-vehicles"}>
+                <IoLogoModelS /> All Vehicles
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to={"/add-vehicles"}>
+                <IoLogoModelS /> Add Vehicles
               </NavLink>
             </li>
           </ul>
@@ -102,9 +108,9 @@ const NavBar = () => {
             <div
               tabIndex={0}
               role="button"
-              className="btn btn-ghost btn-circle avatar"
+              className="btn btn-ghost btn-circle avatar "
             >
-              <div className="w-9 border-2 border-gray-300 rounded-full hover:">
+              <div className="relative group w-9 border-2 border-gray-300 rounded-full hover:">
                 <img
                   alt="Tailwind CSS Navbar component"
                   referrerPolicy="no-referrer"
@@ -113,6 +119,11 @@ const NavBar = () => {
                     "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
                   }
                 />
+                {user && (
+            <span className="absolute left-1/2 -translate-x-1/2 bottom-12 opacity-0 group-hover:opacity-100 bg-gray-800 text-white text-sm px-3 py-1 rounded-md transition-all duration-300 whitespace-nowrap shadow-md z-10">
+              {user.email}
+            </span>
+          )}
                 
               </div>
            

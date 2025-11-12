@@ -2,11 +2,13 @@ import React, { use, useEffect, useState } from "react";
 import { AuthContext } from "../provider/context";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../hooks/useAxiosSecure";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 const MyBookings = () => {
   const { user } = use(AuthContext);
   const [bookings,setBookings] = useState([])
   const axiosSecure = useAxiosSecure()
+  const [loading,setLoading] = useState(true)
 
   useEffect(() => {
     // fetch(`http://localhost:3000/my-bookings?email=${user.email}`,{
@@ -23,6 +25,7 @@ const MyBookings = () => {
     axiosSecure(`/my-bookings?email=${user.email}`)
     .then(data=>{
       setBookings(data.data)
+      setLoading(false)
 
     })
 
@@ -83,6 +86,7 @@ const MyBookings = () => {
             </thead>
             <tbody>
               {/* row 1 */}
+              {loading && <LoadingSpinner/>}
               {bookings.map((b, index) => (
                 <tr>
                   <th>
