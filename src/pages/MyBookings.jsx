@@ -51,7 +51,7 @@ const MyBookings = () => {
             if (data.deletedCount) {
               Swal.fire({
                 title: "Deleted!",
-                text: "Your file has been deleted.",
+                text: "Your booking has been cancelled.",
                 icon: "success",
               }); 
             const remaining = bookings.filter(bid=> bid._id !== _id)
@@ -64,7 +64,7 @@ const MyBookings = () => {
   };
   return (
     <div className="p-4">
-  <h3 className="font-bold text-primary text-lg mb-4 text-center md:text-left">
+  <h3 className="font-bold text-primary text-lg mb-4 text-center md:text-center ">
     My Total Bookings: {bookings.length}
   </h3>
 

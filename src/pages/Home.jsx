@@ -21,7 +21,6 @@ const Home = () => {
   return (
     <div>
       <div>
-        {/* <Nav></Nav> */}
         <Banner></Banner>
       </div>
       <div>

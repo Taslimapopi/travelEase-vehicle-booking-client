@@ -64,14 +64,17 @@ const VehicleDetails = () => {
     const pickUpTimeDate = parseISO(pickUpTimeRaw);
     const returnTimeDate = parseISO(returnTimeRaw);
 
-    const formattedPickUpTime = format(
-      pickUpTimeDate,
-      "yyyy-MM-dd'T'HH:mm:ssxxx"
-    );
-    const formattedReturnTime = format(
-      returnTimeDate,
-      "yyyy-MM-dd'T'HH:mm:ssxxx"
-    );
+    // const formattedPickUpTime = format(
+    //   pickUpTimeDate,
+    //   "yyyy-MM-dd'T'HH:mm:ssxxx"
+    // );
+    // const formattedReturnTime = format(
+    //   returnTimeDate,
+    //   "yyyy-MM-dd'T'HH:mm:ssxxx"
+    // );
+
+    const formattedPickUpTime = format(pickUpTimeDate, "yyyy-MM-dd'T'HH:mm");
+    const formattedReturnTime = format(returnTimeDate, "yyyy-MM-dd'T'HH:mm");
 
     if (isBefore(returnTimeDate, pickUpTimeDate)) {
       alert("Return time must be after pick up time");
