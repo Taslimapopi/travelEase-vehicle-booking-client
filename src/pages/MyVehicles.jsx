@@ -15,7 +15,7 @@ const MyVehicles = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // fetch(`http://localhost:3000/my-vehicles?email=${user.email}`,{
+    // fetch(`https://travel-ease-server-kappa.vercel.app/my-vehicles?email=${user.email}`,{
     //     headers:{
     //         authorization: `Bearer ${user.accessToken}`
     //     }
@@ -36,7 +36,7 @@ const MyVehicles = () => {
   }, [user, axiosSecure]);
 
   // const handleDelete = (id) => {
-  //   fetch(`http://localhost:3000/vehicles/${id}`, {
+  //   fetch(`https://travel-ease-server-kappa.vercel.app/vehicles/${id}`, {
   //     method: "DELETE",
   //     headers: {
   //       "Content-Type": "application/json",
@@ -64,39 +64,37 @@ const MyVehicles = () => {
   //     .catch((error) => console.log(error));
   // };
   const handleDelete = (id) => {
-  Swal.fire({
-    title: "Are you sure?",
-    text: "You won't be able to revert this!",
-    icon: "warning",
-    showCancelButton: true,
-    confirmButtonColor: "#3085d6",
-    cancelButtonColor: "#d33",
-    confirmButtonText: "Yes, delete it!",
-  }).then((result) => {
-    if (result.isConfirmed) {
-      // ✅ এখনই DELETE রিকোয়েস্ট পাঠানো হবে
-      fetch(`http://localhost:3000/vehicles/${id}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-        .then((res) => res.json())
-        .then(() => {
-          
-          Swal.fire({
-            title: "Deleted!",
-            text: "Your vehicle has been deleted.",
-            icon: "success",
-          });
-
-        
-          setMyVehicles((prev) => prev.filter((v) => v._id !== id));
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // ✅ এখনই DELETE রিকোয়েস্ট পাঠানো হবে
+        fetch(`https://travel-ease-server-kappa.vercel.app/vehicles/${id}`, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
         })
-        .catch((error) => console.log(error));
-    }
-  });
-};
+          .then((res) => res.json())
+          .then(() => {
+            Swal.fire({
+              title: "Deleted!",
+              text: "Your vehicle has been deleted.",
+              icon: "success",
+            });
+
+            setMyVehicles((prev) => prev.filter((v) => v._id !== id));
+          })
+          .catch((error) => console.log(error));
+      }
+    });
+  };
 
   if (loading) return <LoadingSpinner />;
 

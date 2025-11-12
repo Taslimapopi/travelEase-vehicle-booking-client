@@ -14,63 +14,86 @@ import AllVehicles from "../pages/AllVehicles";
 import NotFound from "../pages/NotFound";
 import LoadingSpinner from "../components/LoadingSpinner";
 
-
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <Homelayout></Homelayout>,
     hydrateFallbackElement: <LoadingSpinner></LoadingSpinner>,
-    children:[
-        {
-            index:true,
-            element:<Home></Home>,
-            // loader: () => fetch('http://localhost:3000/vehicles')
-        },
-        {
-            path:'/all-vehicles',
-            // loader: () => fetch('http://localhost:3000/all-vehicles'),
-            element: <AllVehicles></AllVehicles>
-        },
-        {
-            path:'/vehicle-details/:id',
-            element:<PrivateRoute><VehicleDetails></VehicleDetails></PrivateRoute>
-        },
-        {
-            path:'/auth/login',
-            element:<Login></Login>
-        },
-        {
-            path:'/auth/register',
-            element:<Register></Register>
-        },
-        {
-            path:'/add-vehicles',
-            element: <PrivateRoute><AddVehicles></AddVehicles></PrivateRoute>,
-            hydrateFallbackElement: <LoadingSpinner></LoadingSpinner>
-        },
-        {
-            path:'/update-vehicles/:id',
-            element:<PrivateRoute><UpdateVehicles></UpdateVehicles></PrivateRoute>,
-            loader:({params})=>fetch(`http://localhost:3000/vehicles/${params.id}`)
-        },
-        {
-            path:'/my-vehicles',
-            element:<PrivateRoute><MyVehicles></MyVehicles></PrivateRoute>
-
-        },
-        {
-            path:'/my-bookings',
-            element:<PrivateRoute><MyBookings></MyBookings></PrivateRoute>
-        },
-        {
-            path:'/profile',
-            element:<PrivateRoute><Profile></Profile></PrivateRoute>
-        },
-        {
-            path:'/*',
-            element:<NotFound></NotFound>
-        }
-        
-    ]
+    children: [
+      {
+        index: true,
+        element: <Home></Home>,
+        // loader: () => fetch('https://travel-ease-server-kappa.vercel.app/vehicles')
+      },
+      {
+        path: "/all-vehicles",
+        element: <AllVehicles></AllVehicles>,
+      },
+      {
+        path: "/vehicle-details/:id",
+        element: (
+          <PrivateRoute>
+            <VehicleDetails></VehicleDetails>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/auth/login",
+        element: <Login></Login>,
+      },
+      {
+        path: "/auth/register",
+        element: <Register></Register>,
+      },
+      {
+        path: "/add-vehicles",
+        element: (
+          <PrivateRoute>
+            <AddVehicles></AddVehicles>
+          </PrivateRoute>
+        ),
+        hydrateFallbackElement: <LoadingSpinner></LoadingSpinner>,
+      },
+      {
+        path: "/update-vehicles/:id",
+        element: (
+          <PrivateRoute>
+            <UpdateVehicles></UpdateVehicles>
+          </PrivateRoute>
+        ),
+        loader: ({ params }) =>
+          fetch(
+            `https://travel-ease-server-kappa.vercel.app/vehicles/${params.id}`
+          ),
+      },
+      {
+        path: "/my-vehicles",
+        element: (
+          <PrivateRoute>
+            <MyVehicles></MyVehicles>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/my-bookings",
+        element: (
+          <PrivateRoute>
+            <MyBookings></MyBookings>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/profile",
+        element: (
+          <PrivateRoute>
+            <Profile></Profile>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/*",
+        element: <NotFound></NotFound>,
+      },
+    ],
   },
 ]);

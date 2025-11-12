@@ -4,9 +4,9 @@ import useAuth from "../hooks/useAuth";
 import { toast } from "react-toastify";
 
 const UpdateVehicles = () => {
-  const {user} = useAuth()
+  const { user } = useAuth();
   const vehicle = useLoaderData();
-  console.log(vehicle,user)
+  console.log(vehicle, user);
   const navigate = useNavigate();
 
   const handleUpdateVehicle = (e) => {
@@ -24,20 +24,21 @@ const UpdateVehicles = () => {
       created_at: new Date(),
       userEmail: user.email,
     };
-    
-    fetch(`http://localhost:3000/vehicles/${vehicle._id}`, {
-      method: "PUT",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    })
+
+    fetch(
+      `https://travel-ease-server-kappa.vercel.app/vehicles/${vehicle._id}`,
+      {
+        method: "PUT",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
-        
-        
         toast.success("vehicle updated successfully");
-        navigate('/my-vehicles')
+        navigate("/my-vehicles");
         e.target.reset();
       })
       .catch((error) => toast.error(error));
@@ -46,9 +47,11 @@ const UpdateVehicles = () => {
   return (
     <div className="card border border-gray-200 bg-base-100 w-full max-w-md mx-auto shadow-2xl rounded-2xl">
       <div className="card-body p-6 relative">
-        <h2 className="text-2xl font-bold text-center mb-6">Update Your Model</h2>
+        <h2 className="text-2xl font-bold text-center mb-6">
+          Update Your Model
+        </h2>
         <form onSubmit={handleUpdateVehicle} className="space-y-4">
-       {/*vehicle Name Field */}
+          {/*vehicle Name Field */}
           <div>
             <label className="label font-medium">Vehicle Name</label>
             <input
@@ -130,7 +133,7 @@ const UpdateVehicles = () => {
               required
               className="select w-full rounded-full focus:border-0 focus:outline-gray-200"
             >
-              <option value=""  disabled>
+              <option value="" disabled>
                 Select category
               </option>
               <option value="SUV">SUV</option>

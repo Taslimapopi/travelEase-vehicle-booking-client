@@ -28,7 +28,7 @@ const AddVehicles = () => {
       userEmail: user.email,
     };
 
-    // fetch('http://localhost:3000/vehicles',{
+    // fetch('https://travel-ease-server-kappa.vercel.app/vehicles',{
     //   method: "POST",
     //   headers:{
     //     'content-type': 'application/json'

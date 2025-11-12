@@ -13,7 +13,7 @@ const VehicleDetails = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(`http://localhost:3000/vehicles/${id}`, {
+    fetch(`https://travel-ease-server-kappa.vercel.app/vehicles/${id}`, {
       headers: {
         authorization: `Bearer ${user.accessToken}`,
       },
@@ -23,7 +23,7 @@ const VehicleDetails = () => {
   }, [id, user]);
 
   // const handleDelete = () => {
-  //   fetch(`http://localhost:3000/vehicles/${vehicle._id}`, {
+  //   fetch(`https://travel-ease-server-kappa.vercel.app/vehicles/${vehicle._id}`, {
   //     method: "DELETE",
   //     headers: {
   //       "Content-Type": "application/json",
@@ -90,7 +90,7 @@ const VehicleDetails = () => {
       email: e.target.email.value,
     };
 
-    fetch("http://localhost:3000/bookings", {
+    fetch("https://travel-ease-server-kappa.vercel.app/bookings", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -104,8 +104,8 @@ const VehicleDetails = () => {
         e.target.reset();
         // navigate("/");
         if (bookModalRef.current) {
-      bookModalRef.current.close();
-    }
+          bookModalRef.current.close();
+        }
       })
       .catch((error) => console.log(error));
   };
@@ -249,13 +249,14 @@ const VehicleDetails = () => {
                 required
               />
 
-              <button type="submit" className="btn btn-accent mt-4 w-full">Book Now</button>
+              <button type="submit" className="btn btn-accent mt-4 w-full">
+                Book Now
+              </button>
             </fieldset>
           </form>
 
           <div className="modal-action">
             <form method="dialog">
-              
               <button className="btn">Close</button>
             </form>
           </div>
