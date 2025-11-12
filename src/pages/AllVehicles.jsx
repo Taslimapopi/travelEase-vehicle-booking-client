@@ -22,27 +22,13 @@ const AllVehicles = () => {
       }
     };
 
-    fetchVehicles(); // ✅ এখন এটা function call
+    fetchVehicles(); 
   }, [sortOrder, axiosHook]);
 
   return (
     <div>
       {/* Sorting buttons */}
-      {/* <div className="flex justify-center mb-6 space-x-4">
-        <button
-          onClick={() => setSortOrder("asc")}
-          className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
-        >
-          Sort by Price ↑ (Low to High)
-        </button>
 
-        <button
-          onClick={() => setSortOrder("dsc")}
-          className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition"
-        >
-          Sort by Price ↓ (High to Low)
-        </button>
-      </div> */}
       <div className="flex justify-end mb-6 bg-white shadow-md rounded-lg px-6 py-3 space-x-8">
         <label className="flex items-center gap-2 cursor-pointer hover:text-blue-600 transition">
           <input

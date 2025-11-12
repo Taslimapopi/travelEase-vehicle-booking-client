@@ -6,7 +6,7 @@ import useAxiosSecure from "../hooks/useAxiosSecure";
 const MyBookings = () => {
   const { user } = use(AuthContext);
   const [bookings,setBookings] = useState([])
-  const axiouSecure = useAxiosSecure
+  const axiosSecure = useAxiosSecure()
 
   useEffect(() => {
     // fetch(`http://localhost:3000/my-bookings?email=${user.email}`,{
@@ -20,13 +20,13 @@ const MyBookings = () => {
     //   })
     //   .catch((error) => console.log(error));
 
-    axiouSecure(`/my-bookings?email=${user.email}`)
+    axiosSecure(`/my-bookings?email=${user.email}`)
     .then(data=>{
       setBookings(data.data)
 
     })
 
-  }, [user,axiouSecure]);
+  }, [user,axiosSecure]);
 
   const handleRemoveBookings = (_id) => {
     Swal.fire({

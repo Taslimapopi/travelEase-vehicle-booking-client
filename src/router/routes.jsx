@@ -11,6 +11,7 @@ import MyBookings from "../pages/MyBookings";
 import Register from "../pages/Register";
 import Profile from "../pages/Profile";
 import AllVehicles from "../pages/AllVehicles";
+import NotFound from "../pages/NotFound";
 
 
 export const router = createBrowserRouter([
@@ -61,7 +62,12 @@ export const router = createBrowserRouter([
         {
             path:'/profile',
             element:<PrivateRoute><Profile></Profile></PrivateRoute>
+        },
+        {
+            path:'/*',
+            element:<NotFound></NotFound>
         }
+        
     ]
   },
 ]);

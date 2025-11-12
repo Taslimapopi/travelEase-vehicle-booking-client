@@ -1,23 +1,25 @@
 import React, { use, useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router";
 import { AuthContext } from "../provider/context";
+import { format, parseISO, isBefore } from "date-fns";
 
 const VehicleDetails = () => {
   const { id } = useParams();
   const [vehicle, setVehicle] = useState({});
   const bookModalRef = useRef(null);
   const { user } = use(AuthContext);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  
 
   useEffect(() => {
-    fetch(`http://localhost:3000/vehicles/${id}`,{
-      headers:{
-            authorization: `Bearer ${user.accessToken}`
-        }
+    fetch(`http://localhost:3000/vehicles/${id}`, {
+      headers: {
+        authorization: `Bearer ${user.accessToken}`,
+      },
     })
       .then((res) => res.json())
       .then((data) => setVehicle(data));
-  }, [id,user]);
+  }, [id, user]);
 
   const handleDelete = () => {
     fetch(`http://localhost:3000/vehicles/${vehicle._id}`, {
@@ -37,28 +39,62 @@ const VehicleDetails = () => {
 
   const handleBookForm = (e) => {
     e.preventDefault();
+    // const bookData = {
+    //   user: e.target.userName.value,
+    //   vehicleName: e.target.vehicleName.value,
+    //   pickUpTime: e.target.pickingTime.value,
+    //   returnTime: e.target.returnTime.value,
+    //   location: e.target.location.value,
+    //   email: e.target.email.value,
+    // };
+
+    const pickUpTimeRaw = e.target.pickingTime.value; // string from input
+    const returnTimeRaw = e.target.returnTime.value;
+
+    // Optional: parse to Date object
+    const pickUpTimeDate = parseISO(pickUpTimeRaw);
+    const returnTimeDate = parseISO(returnTimeRaw);
+
+    // Optional: ফরম্যাট করা string
+    const formattedPickUpTime = format(
+      pickUpTimeDate,
+      "yyyy-MM-dd'T'HH:mm:ssxxx"
+    ); // ISO string with timezone
+    const formattedReturnTime = format(
+      returnTimeDate,
+      "yyyy-MM-dd'T'HH:mm:ssxxx"
+    );
+
+    // Optional: Validate pick up before return
+    if (isBefore(returnTimeDate, pickUpTimeDate)) {
+      alert("Return time must be after pick up time");
+      return;
+    }
+
+    // তারপর bookData তে assign করো:
     const bookData = {
       user: e.target.userName.value,
       vehicleName: e.target.vehicleName.value,
-      pickUpTime: e.target.pickingTime.value,
-      returnTime: e.target.returnTime.value,
+      pickUpTime: formattedPickUpTime, // or pickUpTimeRaw if formatting not needed
+      returnTime: formattedReturnTime,
       location: e.target.location.value,
       email: e.target.email.value,
     };
-   
-    fetch("http://localhost:3000/bookings",{
-        method: 'POST',
-        headers:{
-            'content-type':'application/json'
-        },
-        body: JSON.stringify(bookData)
+
+    fetch("http://localhost:3000/bookings", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(bookData),
     })
-    .then(res=>res.json())
-    .then(data=>{console.log(data)
-        e.target.reset()
-        navigate('/')
-    })
-    .catch(error=>console.log(error))
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        e.target.reset();
+        navigate("/");
+      })
+      .catch((error) => console.log(error));
   };
 
   return (
@@ -162,20 +198,34 @@ const VehicleDetails = () => {
               />
 
               {/* Pickup Time */}
-              <label className="label font-semibold">Pickup Time</label>
+              {/* <label className="label font-semibold">Pickup Time</label>
               <input
                 type="datetime-local"
                 name="pickingTime"
                 className="input input-bordered w-full"
                 required
+              /> */}
+              <input
+                type="datetime-local"
+                name="pickingTime"
+                className="input input-bordered w-full"
+                min={format(new Date(), "yyyy-MM-dd'T'HH:mm")} // আজকের সময় থেকে ছোট কিছু নেওয়া যাবে না
+                required
               />
 
               {/* Return Time */}
-              <label className="label font-semibold">Return Time</label>
+              {/* <label className="label font-semibold">Return Time</label>
               <input
                 type="datetime-local"
                 name="returnTime"
                 className="input input-bordered w-full"
+                required
+              /> */}
+              <input
+                type="datetime-local"
+                name="returnTime"
+                className="input input-bordered w-full"
+                min={format(new Date(), "yyyy-MM-dd'T'HH:mm")} // অথবা pickUpTime থেকে কম সময় নেয়া যাবে না
                 required
               />
 
