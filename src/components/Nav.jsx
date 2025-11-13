@@ -118,7 +118,7 @@ const Nav = () => {
             <img
               src={logo}
               alt="Logo"
-              className="h-12 w-12 rounded-full shadow-md ring-2 ring-orange-400"
+              className="h-12 w-12 rounded-full shadow-md ring-2 ring-orange-400 hidden md:block"
             />
             <span className="bg-gradient-to-r from-orange-500 to-yellow-500 text-transparent bg-clip-text">
               TravelEase
