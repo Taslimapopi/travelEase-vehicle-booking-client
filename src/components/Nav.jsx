@@ -63,7 +63,7 @@ const Nav = () => {
               to="/my-vehicles"
               className="font-semibold hover:text-orange-500 transition-colors duration-300"
             >
-             My Vehicles
+              My Vehicles
             </NavLink>
           </li>
           <li>
@@ -71,7 +71,8 @@ const Nav = () => {
               to="/my-bookings"
               className="font-semibold hover:text-orange-500 transition-colors duration-300"
             >
-              <FaAddressBook />My Bookings
+              <FaAddressBook />
+              My Bookings
             </NavLink>
           </li>
         </>
@@ -166,12 +167,24 @@ const Nav = () => {
               <IoLogOut /> Logout
             </button>
           ) : (
-            <Link
-              to="/auth/login"
-              className="btn font-semibold border-none bg-gradient-to-r from-orange-500 to-yellow-500 text-white shadow-md hover:shadow-lg hover:scale-105 transition-transform duration-300"
-            >
-              <IoLogIn /> Login
-            </Link>
+            <div className="flex gap-2 items-center">
+              {/* 🔸 Register Button */}
+              <Link
+                to="/auth/register"
+                className="hidden md:flex items-center justify-center gap-1 btn font-semibold border-none bg-gradient-to-r from-orange-500 to-yellow-500 text-white shadow-md hover:shadow-lg hover:scale-105 transition-transform duration-300"
+              >
+                Register
+              </Link>
+
+              {/* 🔸 Login Button */}
+              <Link
+                to="/auth/login"
+                className="flex items-center justify-center gap-1 btn font-semibold border-none bg-gradient-to-r from-orange-500 to-yellow-500 text-white shadow-md hover:shadow-lg hover:scale-105 transition-transform duration-300"
+              >
+                <IoLogIn className="text-lg" />
+                Login
+              </Link>
+            </div>
           )}
         </div>
       </div>
