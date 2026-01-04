@@ -13,6 +13,9 @@ import Profile from "../pages/Profile";
 import AllVehicles from "../pages/AllVehicles";
 import NotFound from "../pages/NotFound";
 import LoadingSpinner from "../components/LoadingSpinner";
+import DashboardLayout from "../layOut/DashboardLayout";
+import DashboardHome from "../hooks/DashboardLayout/DashboardHome";
+import BlogPage from "../components/Blog";
 
 export const router = createBrowserRouter([
   {
@@ -31,11 +34,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "/vehicle-details/:id",
-        element: (
-          <PrivateRoute>
-            <VehicleDetails></VehicleDetails>
-          </PrivateRoute>
-        ),
+        element: <VehicleDetails></VehicleDetails>,
+      },
+      {
+        path: "/blog",
+        element: <BlogPage />,
       },
       {
         path: "/auth/login",
@@ -66,22 +69,22 @@ export const router = createBrowserRouter([
             `https://travel-ease-server-kappa.vercel.app/vehicles/${params.id}`
           ),
       },
-      {
-        path: "/my-vehicles",
-        element: (
-          <PrivateRoute>
-            <MyVehicles></MyVehicles>
-          </PrivateRoute>
-        ),
-      },
-      {
-        path: "/my-bookings",
-        element: (
-          <PrivateRoute>
-            <MyBookings></MyBookings>
-          </PrivateRoute>
-        ),
-      },
+      // {
+      //   path: "/my-vehicles",
+      //   element: (
+      //     <PrivateRoute>
+      //       <MyVehicles></MyVehicles>
+      //     </PrivateRoute>
+      //   ),
+      // },
+      // {
+      //   path: "/my-bookings",
+      //   element: (
+      //     <PrivateRoute>
+      //       <MyBookings></MyBookings>
+      //     </PrivateRoute>
+      //   ),
+      // },
       {
         path: "/profile",
         element: (
@@ -93,6 +96,32 @@ export const router = createBrowserRouter([
       {
         path: "/*",
         element: <NotFound></NotFound>,
+      },
+    ],
+  },
+  {
+    path: "/dashboard",
+    element: <DashboardLayout></DashboardLayout>,
+    children: [
+      {
+        path: "",
+        element: <DashboardHome></DashboardHome>,
+      },
+      {
+        path: "my-vehicles",
+        element: (
+          <PrivateRoute>
+            <MyVehicles></MyVehicles>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "my-bookings",
+        element: (
+          <PrivateRoute>
+            <MyBookings></MyBookings>
+          </PrivateRoute>
+        ),
       },
     ],
   },

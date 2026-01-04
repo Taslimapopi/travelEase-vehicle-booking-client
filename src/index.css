@@ -17,6 +17,11 @@
          rounded-lg font-semibold shadow-md hover:shadow-xl 
          transform hover:scale-105 transition duration-300 ease-in-out;
 }
+.btn_common1 {
+  @apply px-3 py-2 bg-gradient-to-r from-orange-500 to-yellow-500 text-white 
+         rounded-lg font-semibold shadow-md hover:shadow-xl 
+         transform hover:scale-105 transition duration-300 ease-in-out;
+}
 
 .active{
     @apply bg-gradient-to-r from-orange-500 to-yellow-500 text-transparent bg-clip-text

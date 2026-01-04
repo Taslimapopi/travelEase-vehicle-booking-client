@@ -7,6 +7,9 @@ import AboutTravelEase from "../components/AboutTravelEase";
 import ReviewSection from "../components/ReviewSection";
 import LoadingSpinner from "../components/LoadingSpinner";
 import Nav from "../components/Nav";
+import FAQ from "../components/FAQ";
+import Newsletter from "../components/Newsletter";
+import BecomeVehicleOwner from "../components/BecomeVehicleOwner";
 
 const Home = () => {
   const useAxiosHook = useAxios();
@@ -26,10 +29,10 @@ const Home = () => {
       <div>
         
         <h1 className="text-4xl font-extrabold text-center text-gray-900 mb-8">
-          Explore Our Top 6 Vehicles
+          Explore Our Top 8 Vehicles
         </h1>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-1">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
         {
           loading && <LoadingSpinner/>
         }
@@ -39,6 +42,11 @@ const Home = () => {
       </div>
       <AboutTravelEase></AboutTravelEase>
       <ReviewSection></ReviewSection>
+      <BecomeVehicleOwner></BecomeVehicleOwner>
+      
+      <FAQ></FAQ>
+      <Newsletter></Newsletter>
+      
     </div>
   );
 };

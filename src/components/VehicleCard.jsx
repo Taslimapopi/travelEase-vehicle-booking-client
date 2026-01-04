@@ -7,7 +7,7 @@ const VehicleCard = ({ vehicle }) => {
   return (
     <div className="bg-white rounded-xl shadow-md border border-gray-200 
                 flex flex-col justify-between 
-                h-full w-full p-4 hover:shadow-2xl transition-all duration-300">
+                h-full w-full p-4 hover:shadow-2xl transition-all duration-300 hover:scale-105 ">
       
       {/* Vehicle Name on top */}
       <div className="bg-gray-100 py-3 text-center">
@@ -20,7 +20,7 @@ const VehicleCard = ({ vehicle }) => {
       <img
         src={vehicle.coverImage}
         alt={vehicle.vehicleName}
-        className="w-full h-56 object-cover rounded-lg"
+        className="w-full h-48 object-cover rounded-lg"
       />
 
       {/* Details */}

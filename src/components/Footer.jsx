@@ -15,7 +15,7 @@ const TwitterXIcon = () => (
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-900 text-gray-300 py-10">
+    <footer className="bg-[rgb(56,55,55)] text-gray-300 pt-10">
       <div className="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-4 gap-8">
         {/* Company Info */}
         <div>
@@ -107,7 +107,7 @@ const Footer = () => {
         </div>
       </div>
 
-      <div className="mt-10 border-t border-gray-700 pt-6 text-center text-sm text-gray-500">
+      <div className="my-3 bg-[rgb(84,108,220)] border-t border-gray-700 py-6 text-center text-sm text-white">
         &copy; {new Date().getFullYear()} TravelEase. All rights reserved.
       </div>
     </footer>

@@ -15,9 +15,10 @@ const Homelayout = () => {
       </header>
 
       {/* Main Content Area */}
-      <main className="flex-1 max-w-7xl mx-auto w-full px-4 md:px-6 py-24">
+      <main className="flex-1 max-w-6xl mx-auto w-full px-4 md:px-6 py-20">
         
         <Outlet />
+        
       </main>
 
       {/* Footer */}

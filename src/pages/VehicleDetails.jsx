@@ -4,24 +4,31 @@ import { AuthContext } from "../provider/context";
 import { format, parseISO, isBefore } from "date-fns";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
+import useAuth from "../hooks/useAuth";
 
 const VehicleDetails = () => {
   const { id } = useParams();
   const [vehicle, setVehicle] = useState({});
   const bookModalRef = useRef(null);
-  const { user } = use(AuthContext);
+  const { user } = use(AuthContext) 
   const navigate = useNavigate();
 
+  console.log(user)
+
   useEffect(() => {
-    fetch(`https://travel-ease-server-kappa.vercel.app/vehicles/${id}`, {
+    
+    fetch(`https://travel-ease-server-kappa.vercel.app/vehicles/${id}`,
+       {
       headers: {
-        authorization: `Bearer ${user.accessToken}`,
+        authorization: `Bearer ${user?.accessToken}`,
       },
     })
       .then((res) => res.json())
       .then((data) => setVehicle(data));
   }, [id, user]);
 
+ 
+  
   // const handleDelete = () => {
   //   fetch(`https://travel-ease-server-kappa.vercel.app/vehicles/${vehicle._id}`, {
   //     method: "DELETE",
@@ -242,7 +249,8 @@ const VehicleDetails = () => {
               <label className="label font-semibold">Email</label>
               <input
                 type="email"
-                defaultValue={user.email}
+              value={user?.email || ""}
+                // defaultValue={user.email}
                 name="email"
                 className="input input-bordered w-full"
                 placeholder="Enter your email"

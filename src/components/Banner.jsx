@@ -18,13 +18,15 @@ const Banner = () => {
 
   // Auto slide every 10 sec
   useEffect(() => {
-    if (!vehicles.length) return;
-    const timer = setInterval(() => {
-      setDirection(1); // always slide left
-      setCurrentIndex((prev) => (prev + 1) % vehicles.length);
-    }, 10000);
-    return () => clearInterval(timer);
-  }, [vehicles]);
+  if (!vehicles.length) return;
+
+  const interval = setInterval(() => {
+    setDirection(1);
+    setCurrentIndex((prev) => (prev + 1) % vehicles.length);
+  }, 5000); // 👈 5 seconds
+
+  return () => clearInterval(interval);
+}, [vehicles.length]);
 
   if (!vehicles.length) {
     return (
@@ -47,18 +49,18 @@ const Banner = () => {
       x: 0,
       opacity: 1,
       scale: 1,
-      transition: { duration: 0.8, ease: "easeOut" },
+      transition: { duration: 0.4, ease: "easeOut" },
     },
     exit: (direction) => ({
       x: direction < 0 ? 200 : -200,
       opacity: 0,
       scale: 0.95,
-      transition: { duration: 0.8, ease: "easeIn" },
+      transition: { duration: 0.4, ease: "easeIn" },
     }),
   };
 
   return (
-    <div className="relative w-full h-[550px] overflow-hidden rounded-2xl shadow-xl bg-gray-900">
+    <div className="relative w-full h-[60vh] max-h-[75vh] overflow-hidden rounded-2xl shadow-xl bg-gray-900">
       <AnimatePresence mode="wait" custom={direction}>
         <motion.div
           key={currentVehicle._id}
@@ -138,6 +140,13 @@ const Banner = () => {
           ></button>
         ))}
       </div>
+      <motion.div
+        className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white opacity-70"
+        animate={{ y: [0, 10, 0] }}
+        transition={{ repeat: Infinity, duration: 1.5 }}
+      >
+        ↓ Scroll
+      </motion.div>
     </div>
   );
 };
