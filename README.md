@@ -2,6 +2,9 @@
 
 🔗 https://traveleasy-projects.web.app/
 
+
+<img width="438" height="422" alt="traveleasy" src="https://github.com/user-attachments/assets/bf29e96a-67d2-48f4-9ea3-e35fdd63a2c7" />
+
 **TravelEasy** is a modern car booking web application built with React, Firebase Authentication, and MongoDB. It simplifies vehicle rentals with a fast, intuitive interface and robust backend.
 
 ## 🚗 Features
