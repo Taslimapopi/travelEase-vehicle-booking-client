@@ -1,4 +1,4 @@
-<img width="1920" height="6508" alt="screencapture-traveleasy-projects-web-app-2026-01-22-01_12_11" src="https://github.com/user-attachments/assets/db1b4726-9be7-40e3-9106-445881eab2ab" /># 🌍 TravelEasy
+
 
 🔗 https://traveleasy-projects.web.app/
 
